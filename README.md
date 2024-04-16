@@ -13,7 +13,7 @@ npm install
 Any environment configuration steps.
 
 ### Start & watch
-``
+```
 npm run dev
 npm start
-``
+```
