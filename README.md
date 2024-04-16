@@ -18,7 +18,7 @@ npm run dev
 npm start
 ```
 ## Architecture 
-![image](https://github.com/Makster04/caps/assets/86382359/f13c76ec-d246-487e-85d7-bade76698937)
+![image](https://github.com/Makster04/caps/assets/86382359/b2c79ecf-39ee-474b-ad1b-12e87a653e05)
 ![image](https://github.com/Makster04/caps/assets/86382359/b2f7ba8b-57d8-46df-9aad-e647c49cf2e9)
 ![image](https://github.com/Makster04/caps/assets/86382359/4b5660c3-7907-446e-bd85-77090d0d4408)
 
