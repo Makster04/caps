@@ -39,3 +39,12 @@ npm start
 ├── hub.js.
 ├── package.json
 └── README.md
+```
+### Languages & tools
+* JavaScript
+* Jest
+* Node
+* Chance
+  
+## Change Log
+0.0.1 - Initial release
