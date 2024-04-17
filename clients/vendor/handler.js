@@ -1,4 +1,4 @@
-/ VENDOR ROLE: Responsible for creating and submitting new packages to the system
+// VENDOR ROLE: Responsible for creating and submitting new packages to the system
 
 const Chance = require("chance");
 
