@@ -1,19 +1,20 @@
-'use strict';
-
 const io = require('socket.io-client');
+const handler = require("./handler.js");
 
-let socket = io.connect('http://localhost:3000/caps');
+const url = 'http://localhost:3000/caps';
+const events = io.connect(url);
 
-socket.emit('join', {
-  clientId: 'driver',
-  capsId: 'caps',
-});
+events.emit('join', { store: '401d59', clientId: 'driver'});
+events.on('join', console.log);
 
-socket.on('pickup',(payload) => {
-  console.log('DRIVER: picked up package', payload.package.orderId);
-  socket.emit('inTransit', payload);
-  console.log('DRIVER: delivered package', payload.package.orderId);
-  socket.emit('delivered', payload);
-});
+function pickedUP() {
+  events.on("pickup", (payload) => handler.transit(events, payload)); // Driver package pickup notification
+}
 
-socket.on('join', console.log);
+function droppingOff() {
+  events.on("inTransit", (payload) => handler.delivered(events, payload)); // Driver package delivery notification
+}
+
+pickedUP();
+droppingOff();
+// module.exports = { pickedUP, droppingOff };
