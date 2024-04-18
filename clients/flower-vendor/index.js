@@ -8,7 +8,7 @@ let socket = io.connect('http://localhost:3000/caps');
 
 socket.emit('join', { 
   store: '401d59', 
-  clientId: 'vendor' 
+  clientId: 'flowervendor' 
 });
 
 socket.on('join', console.log);
@@ -20,9 +20,10 @@ function makePayload() {
 
 function delivered() {
   socket.on("delivered", () => {
-    console.log("VENDOR", "Thank you for the delivery!"); // Vendor package delivery notification
+    console.log("FLOWER VENDOR", "Thank you for the delivery!"); // Vendor package delivery notification
   });
 }
 
 delivered();
 makePayload();
+
