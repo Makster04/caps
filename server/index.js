@@ -1,44 +1,31 @@
-// define all events that the clients will emit and listen for (subscribe, publish)
+'use strict';
 
 const io = require('socket.io');
 
 const PORT = process.env.PORT || 3000;
 
-// create a server thing?
-const caps = new io.Server(PORT).of('/caps');
+const server = new io.Server(PORT);
+const capsServer = server.of('/caps');
 
-/**
- * Payload
- *  store
- *  clientId
- *  location
- *  orderId
- */
+capsServer.on('connection', (socket) => {
+  console.log('Client has connected to package notification');
 
-caps.on('connection', (socket) => {
-  console.log('something has connected!!');
-
-  // clients should join a room
-  socket.on('join', ({ store, clientId }) => {
-    socket.join(store);
-    caps.emit('join', 'New Client has joined: ' + clientId);
-  });
-  
-  // clients should be able to emit "pickup"
-  socket.on('pickup', ({ store, orderID, address, customer }) => {
-    console.log('We have a package!', orderID);
-    caps.emit('pickup', { store, orderID, customer, address });
+  socket.on('join', (payload) => {
+    socket.join(payload.capsId);
   });
 
-  // clients should be able to emit "in-transit"
-  socket.on('inTransit', ({ store, orderID, address, customer }) => {
-    console.log('A Package is on its way!', orderID);
-    caps.emit('inTransit', { store, orderID, customer, address });
+  socket.on('pickup', (payload) => {
+    console.log('PICKUP EVENT', payload.package);
+    capsServer.to(payload.capsId).emit('pickup', payload);
   });
 
-  // clients should be able to emit "delivered"
-  socket.on('delivered', ({ store, orderID, address, customer }) => {
-    console.log('A package has been delivered!', orderID);
-    caps.emit('delivered', { store, orderID, customer, address });
+  socket.on('inTransit', (payload) => {
+    console.log('IN TRANSIT EVENT', payload.package);
+    capsServer.to(payload.capsId).emit('inTransit', payload);
+  });
+
+  socket.on('delivered', (payload) => {
+    console.log('DELIVERED EVENT', payload.package);
+    capsServer.to(payload.capsId).emit('delivered', payload);
   });
 });
